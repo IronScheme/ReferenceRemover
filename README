@@ -1,7 +1,7 @@
 ReferenceRemover
 ================
 
-Removes references from an assembly.
+Removes references from an assembly. This is handy when using ILMerge.
 
 Requires: Mono.Cecil
 
