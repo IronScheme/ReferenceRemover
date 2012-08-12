@@ -13,7 +13,7 @@ namespace ReferenceRemover
     {
       if (args.Length == 0)
       {
-        Console.WriteLine("RemoveReferences Assembly [Regex]");
+        Console.WriteLine("RemoveReferences Assembly [Regex Target]");
         return 1;
       }
 
@@ -29,21 +29,17 @@ namespace ReferenceRemover
       }
 
       var match = new Regex(args[1]);
-
-      var col = new List<AssemblyNameReference>();
+      var target = AssemblyDefinition.ReadAssembly(args[2]);
 
       foreach (var r in ass.MainModule.AssemblyReferences)
       {
         if (match.IsMatch(r.FullName))
         {
-          col.Add(r);
+          Console.WriteLine("Redirecting reference: {0} to {1}", r.FullName, target.FullName);
+          r.Name = target.Name.Name;
+          r.Version = target.Name.Version;
+          r.PublicKeyToken = target.Name.PublicKeyToken;
         }
-      }
-
-      foreach (var r in col)
-      {
-        Console.WriteLine("Removing reference: {0}", r.FullName);
-        ass.MainModule.AssemblyReferences.Remove(r);
       }
 
       Console.WriteLine("Saving assembly: {0}", args[0]);
