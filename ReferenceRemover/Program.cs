@@ -40,7 +40,7 @@ namespace ReferenceRemover
 
       foreach (var r in ass.MainModule.AssemblyReferences)
       {
-        if (match.IsMatch(r.FullName) && !exclude.IsMatch(r.FullName))
+        if (match.IsMatch(r.FullName) && (exclude == null || !exclude.IsMatch(r.FullName)))
         {
           Console.WriteLine("Redirecting reference: {0} to {1}", r.FullName, target.FullName);
           r.Name = target.Name.Name;
