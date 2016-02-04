@@ -17,7 +17,7 @@ namespace ReferenceRemover
         return 1;
       }
 
-      var ass = AssemblyDefinition.ReadAssembly(args[0]);
+      var ass = AssemblyDefinition.ReadAssembly(args[0], new ReaderParameters { ReadSymbols = true });
 
       if (args.Length == 1)
       {
@@ -50,7 +50,7 @@ namespace ReferenceRemover
       }
 
       Console.WriteLine("Saving assembly: {0}", args[0]);
-      ass.Write(args[0]);
+      ass.Write(args[0], new WriterParameters { WriteSymbols = true });
 
       return 0;
     }
